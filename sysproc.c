@@ -89,3 +89,17 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+extern void fillTable(pstatTable *);
+
+// info
+int
+sys_getpinfo(void)
+{
+  pstatTable * temp;
+  if(argptr(0, (void *)&temp, sizeof(*temp)) < 0)
+    return -1;
+  fillTable(temp);
+   
+  return 0;
+}

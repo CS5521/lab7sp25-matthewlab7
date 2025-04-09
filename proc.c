@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "pstat.h"
 
 struct {
   struct spinlock lock;
@@ -141,7 +142,8 @@ userinit(void)
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
-
+  p->ticks = 0;
+  p->tickets = 10;
   // this assignment to p->state lets other cores
   // run this process. the acquire forces the above
   // writes to be visible, and the lock is also needed
@@ -211,6 +213,12 @@ fork(void)
   safestrcpy(np->name, curproc->name, sizeof(curproc->name));
 
   pid = np->pid;
+
+  np->ticks = 0;
+  np->tickets = 10;
+  if (curproc->tickets > 10) {
+    np->tickets = curproc->tickets;
+  }
 
   acquire(&ptable.lock);
 
@@ -531,4 +539,28 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+void
+fillTable(pstatTable * table)
+{
+  struct proc *p;
+  int i = 0;
+  for(; i < NPROC; i++)
+  {
+    p = &ptable.proc[i];
+    (*table)[i].state = p->state;
+    (*table)[i].inuse = 1;
+    (*table)[i].tickets = p->tickets;
+    (*table)[i].pid = p->pid;
+    (*table)[i].ticks = p->ticks;
+    int k = 0;
+    for(char c = p->name[k]; c != NULL; c = p->name[k])
+    {
+      (*table)[i].name[k] = c;
+      k++;
+    }
+    (*table)[i].name[k] = NULL;
+  }
+
 }
