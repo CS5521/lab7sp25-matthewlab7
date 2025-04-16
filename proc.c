@@ -555,12 +555,12 @@ fillTable(pstatTable * table)
     (*table)[i].pid = p->pid;
     (*table)[i].ticks = p->ticks;
     int k = 0;
-    for(char c = p->name[k]; c != NULL; c = p->name[k])
+    for(char c = p->name[k]; c != '\0'; c = p->name[k])
     {
       (*table)[i].name[k] = c;
       k++;
     }
-    (*table)[i].name[k] = NULL;
+    (*table)[i].name[k] = '\0';
   }
 
 }
