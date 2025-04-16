@@ -110,7 +110,7 @@ void
 ps()
 {
   pstatTable table;
-  if (getpinfo(table) == -1)
+  if (getpinfo(&table) == -1)
     return;
   int i = 0;
   pstat_t p = table[i];
