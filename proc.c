@@ -348,6 +348,7 @@ scheduler(void)
     acquire(&ptable.lock);
     int totalTickets = 0;
 
+    // Calculate total tickets of all runnable processes
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state == RUNNABLE)
       {
@@ -356,45 +357,45 @@ scheduler(void)
       
     }
 
+    // If no runnable processes, release lock and continue
     if(totalTickets == 0)
     {
       release(&ptable.lock);
       continue;
     }
 
-    int winner = random() % totalTickets;
-    int ticket_count = 0;
-    struct proc *winner_proc = 0;
-    // Switch to chosen process.  It is the process's job
-    // to release ptable.lock and then reacquire it
-    // before jumping back to us.
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    int currentTicket = 0;
+    int winnerTicket = random() % totalTickets;
+    struct proc *winnerProcess = 0;
+
+    // Find the winning process based on the winning ticket number
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; ++p)
     {
       if (p->state == RUNNABLE)
       {
-        ticket_count += p->tickets;
+        currentTicket += p->tickets;
       }
-      if (ticket_count >= winner)
+      if (currentTicket >= winnerTicket)
       {
-        winner_proc = p;
+        winnerProcess = p;
         break;
       }
     }
-    if (winner_proc)
+    // Switch to chosen process.  It is the process's job
+    // to release ptable.lock and then reacquire it
+    // before jumping back to us.
+    if (winnerProcess)
     {
-      c->proc = winner_proc;
-      switchuvm(winner_proc);
-      winner_proc->state = RUNNING;
-      winner_proc->ticks++;
-      swtch(&(c->scheduler), winner_proc->context);
+      c->proc = winnerProcess;
+      switchuvm(winnerProcess);
+      winnerProcess->state = RUNNING;
+      winnerProcess->ticks++;
+      swtch(&(c->scheduler), winnerProcess->context);
       switchkvm();
       c->proc = 0;
     }
     release(&ptable.lock);
   }
-  
-  
-
 }
 
 

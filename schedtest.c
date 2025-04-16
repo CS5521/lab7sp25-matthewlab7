@@ -2,10 +2,6 @@
 #include "user.h"
 #include "stat.h"
 
-void loop_forever() {
-    while (1);
-}
-
 int main(int argc, char *argv[])
 {
     if (argc < 3 || argc > 9)
@@ -24,9 +20,9 @@ int main(int argc, char *argv[])
         exit();
     }
     int tickets[7];
-    int num_tickets = argc -2;
+    int forkCount = argc - 2;
     int i;
-    for (i = 0; i < num_tickets; i++)
+    for (i = 0; i < forkCount; ++i)
     {
         tickets[i] = atoi(argv[i + 2]);
         if (tickets[i] < 10)
@@ -40,7 +36,7 @@ int main(int argc, char *argv[])
         if (pid == 0)
         {
             settickets(tickets[i]);
-            loop_forever();
+            while (1);
         }
         else if (pid > 0)
         {
@@ -59,15 +55,12 @@ int main(int argc, char *argv[])
         sleep(3);
     }
 
-    for (i = 0; i < num_tickets; i++)
+    for (i = 0; i < forkCount; i++)
     {
         kill(tickets[i]);
     }
-    for (i = 0; i < num_tickets; i++)
-    {
-        wait();
-    }
+
+    while(wait() > 0);
 
     exit();
-    
 }
