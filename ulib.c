@@ -114,7 +114,7 @@ ps()
     return;
   int i = 0;
   pstat_t *p = table[i];
-  print("PID\tTKTS\tTCKS\tSTAT\tNAME\n");
+  printf(1, "PID\tTKTS\tTCKS\tSTAT\tNAME\n");
   for(;i < NPROC; p = table[i])
   {
     printf(1, "%d\t%d\t%d\t%s\t%s\n", p->pid, p->tickets, p->ticks, p->state, p->name);
