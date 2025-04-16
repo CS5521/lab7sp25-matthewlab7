@@ -104,3 +104,13 @@ sys_getpinfo(void)
    
   return 0;
 }
+
+int settickets(int tickets)
+{
+  struct proc *p = myproc();
+  if (tickets < 10) {
+    return -1;
+  }
+  p->tickets = tickets;
+  return 0;
+}
