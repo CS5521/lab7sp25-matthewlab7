@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "pstat.h": "c"
+        "pstat.h": "c",
+        "spinlock.h": "c"
     }
 }

@@ -1,3 +1,5 @@
+#include "pstat.h"
+
 struct stat;
 struct rtcdate;
 
