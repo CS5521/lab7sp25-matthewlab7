@@ -39,7 +39,7 @@ forktest(void)
   int n, pid;
 
   printf(1, "fork test\n");
-  2f:	c7 44 24 04 a0 05 00 	movl   $0x5a0,0x4(%esp)
+  2f:	c7 44 24 04 a8 05 00 	movl   $0x5a8,0x4(%esp)
   36:	00 
   37:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   3e:	e8 bd ff ff ff       	call   0 <printf>
@@ -72,7 +72,7 @@ forktest(void)
     printf(1, "fork claimed to work N times!\n", N);
   7d:	c7 44 24 08 e8 03 00 	movl   $0x3e8,0x8(%esp)
   84:	00 
-  85:	c7 44 24 04 ac 05 00 	movl   $0x5ac,0x4(%esp)
+  85:	c7 44 24 04 b4 05 00 	movl   $0x5b4,0x4(%esp)
   8c:	00 
   8d:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   94:	e8 67 ff ff ff       	call   0 <printf>
@@ -87,7 +87,7 @@ forktest(void)
   a5:	85 c0                	test   %eax,%eax
   a7:	79 19                	jns    c2 <forktest+0x99>
       printf(1, "wait stopped early\n");
-  a9:	c7 44 24 04 cb 05 00 	movl   $0x5cb,0x4(%esp)
+  a9:	c7 44 24 04 d3 05 00 	movl   $0x5d3,0x4(%esp)
   b0:	00 
   b1:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   b8:	e8 43 ff ff ff       	call   0 <printf>
@@ -105,7 +105,7 @@ forktest(void)
   d1:	83 f8 ff             	cmp    $0xffffffff,%eax
   d4:	74 19                	je     ef <forktest+0xc6>
     printf(1, "wait got too many\n");
-  d6:	c7 44 24 04 df 05 00 	movl   $0x5df,0x4(%esp)
+  d6:	c7 44 24 04 e7 05 00 	movl   $0x5e7,0x4(%esp)
   dd:	00 
   de:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   e5:	e8 16 ff ff ff       	call   0 <printf>
@@ -114,7 +114,7 @@ forktest(void)
   }
 
   printf(1, "fork test OK\n");
-  ef:	c7 44 24 04 f2 05 00 	movl   $0x5f2,0x4(%esp)
+  ef:	c7 44 24 04 fa 05 00 	movl   $0x5fa,0x4(%esp)
   f6:	00 
   f7:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   fe:	e8 fd fe ff ff       	call   0 <printf>
@@ -555,7 +555,7 @@ ps()
  3fd:	8b 40 20             	mov    0x20(%eax),%eax
  400:	89 85 e0 f6 ff ff    	mov    %eax,-0x920(%ebp)
   printf(1, "PID\tTKTS\tTCKS\tSTAT\tNAME\n");
- 406:	c7 44 24 04 00 06 00 	movl   $0x600,0x4(%esp)
+ 406:	c7 44 24 04 08 06 00 	movl   $0x608,0x4(%esp)
  40d:	00 
  40e:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
  415:	e8 e6 fb ff ff       	call   0 <printf>
@@ -575,7 +575,7 @@ ps()
  44c:	89 4c 24 10          	mov    %ecx,0x10(%esp)
  450:	89 54 24 0c          	mov    %edx,0xc(%esp)
  454:	89 44 24 08          	mov    %eax,0x8(%esp)
- 458:	c7 44 24 04 19 06 00 	movl   $0x619,0x4(%esp)
+ 458:	c7 44 24 04 21 06 00 	movl   $0x621,0x4(%esp)
  45f:	00 
  460:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
  467:	e8 94 fb ff ff       	call   0 <printf>
@@ -756,3 +756,8 @@ SYSCALL(getpinfo)
  598:	b8 16 00 00 00       	mov    $0x16,%eax
  59d:	cd 40                	int    $0x40
  59f:	c3                   	ret    
+
+000005a0 <settickets>:
+ 5a0:	b8 17 00 00 00       	mov    $0x17,%eax
+ 5a5:	cd 40                	int    $0x40
+ 5a7:	c3                   	ret    
