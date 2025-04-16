@@ -549,7 +549,14 @@ fillTable(pstatTable * table)
   for(; i < NPROC; i++)
   {
     p = &ptable.proc[i];
-    (*table)[i].state = p->state;
+    switch (p->state) {
+      case EMBRYO:   (*table)[i].state = 'E'; break;
+      case RUNNING:  (*table)[i].state = 'R'; break;
+      case RUNNABLE: (*table)[i].state = 'A'; break;
+      case SLEEPING: (*table)[i].state = 'S'; break;
+      case ZOMBIE:   (*table)[i].state = 'Z'; break;
+      case UNUSED:  (*table)[i].state = 'U'; break;
+    }
     (*table)[i].inuse = 1;
     (*table)[i].tickets = p->tickets;
     (*table)[i].pid = p->pid;
