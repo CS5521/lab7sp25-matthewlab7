@@ -106,12 +106,14 @@ sys_getpinfo(void)
 }
 
 int
-sys_settickets(int tickets)
+sys_settickets(void)
 {
-  struct proc *p = myproc();
-  if (tickets < 10) {
+  int tickets;
+  if(argint(0, &tickets) < 0)
     return -1;
-  }
+  if(tickets < 10)
+    return -1;
+  struct proc *p = myproc();
   p->tickets = tickets;
   return 0;
 }
