@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+    // Check for valid number of arguments
     if (argc < 3 || argc > 9)
     {
         printf(2, "usage: schedtest loops tickets1 [ tickets2 ... ticketsN ]\n");
@@ -31,17 +32,18 @@ int main(int argc, char *argv[])
             exit();
         }
     
-    
+        
         int pid = fork();
+
+        // Each child process sets tickets to the argument and enters an infinite loop
         if (pid == 0)
         {
             settickets(tickets[i]);
             while (1);
         }
+        // Parent process stores the child's PID in the tickets array
         else if (pid > 0)
-        {
             tickets[i] = pid;
-        }
         else
         {
             printf(2, "fork failed\n");
