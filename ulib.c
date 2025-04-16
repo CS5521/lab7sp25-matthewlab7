@@ -117,7 +117,7 @@ ps()
   printf(1, "PID\tTKTS\tTCKS\tSTAT\tNAME\n");
   for(;p.pid != 0; p = table[i])
   {
-    printf(1, "%d\t%d\t%d\t%s\t%s\n", p.pid, p.tickets, p.ticks, p.state, p.name);
+    printf(1, "%d\t%d\t%d\t%c\t%s\n", p.pid, p.tickets, p.ticks, p.state, p.name);
     i++;
   }
 }
