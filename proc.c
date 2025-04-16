@@ -555,7 +555,8 @@ fillTable(pstatTable * table)
     (*table)[i].pid = p->pid;
     (*table)[i].ticks = p->ticks;
     int k = 0;
-    for(char c = p->name[k]; c != '\0'; c = p->name[k])
+    char c;
+    for(c = p->name[k]; c != '\0'; c = p->name[k])
     {
       (*table)[i].name[k] = c;
       k++;
