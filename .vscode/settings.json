@@ -3,6 +3,9 @@
         "*.embeddedhtml": "html",
         "pstat.h": "c",
         "spinlock.h": "c",
-        "param.h": "c"
+        "param.h": "c",
+        "fcntl.h": "c",
+        "user.h": "c",
+        "types.h": "c"
     }
 }
