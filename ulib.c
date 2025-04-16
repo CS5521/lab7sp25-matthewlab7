@@ -3,6 +3,7 @@
 #include "fcntl.h"
 #include "user.h"
 #include "x86.h"
+#include "pstat.h"
 
 char*
 strcpy(char *s, const char *t)
@@ -112,11 +113,11 @@ ps()
   if (getpinfo(table) == -1)
     return;
   int i = 0;
-  pstat_t *p = table[i];
+  pstat_t p = table[i];
   print("PID\tTKTS\tTCKS\tSTAT\tNAME\n");
-  for(;p != 0; p = table[i])
+  for(;i < NPROC; p = table[i])
   {
-    printf(1, "%d\t%d\t%d\t%s\t%s\n", p->pid, p->tickets, p->ticks, p->state, p->name);
+    printf(1, "%d\t%d\t%d\t%s\t%s\n", p.pid, p.tickets, p.ticks, p.state, p.name);
     i++;
   }
 }
